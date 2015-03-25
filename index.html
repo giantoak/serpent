@@ -1,38 +1,96 @@
 <html>
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <title>HTML5 File API</title>
+  <title>Serpent</title>
+        
+        
+        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type=text/css>
+        <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css" type=text/css>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="bootstrap/js/bootstrap.min.js"></script> 
+        <script type="text/javascript" src="https://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+
+        
+        <script type="text/javascript" charset="utf8" src="../DataTables-1.10.2/media/js/jquery.dataTables.js"></script>
+        <link rel="stylesheet" type="text/css" href="../DataTables-1.10.2/media/css/jquery.dataTables.css">
+        <script type="text/javascript" src="../DataTables-1.10.2/extensions/TableTools/js/dataTables.tableTools.js"></script>
+        <link rel="stylesheet" type="text/css" href="../DataTables-1.10.2/extensions/TableTools/css/dataTables.tableTools.css">   
+ 
+ 
+
+
+<style>
+.btn pull-right {
+   position:relative;
+   overflow:hidden;
+}
+
+
+.pull-right btn-file input[type=file]{
+   position:absolute;
+   top:0;
+   right:0;
+   min-width:100%;
+   min-height:100%;
+   font-size:100px;
+   text-align:right;
+   filter: alpha(opacity=0);
+   opacity: 0;
+   outline:none;
+   background:white;
+   cursor: inherit;
+   display:block;
+
+}
+
+.node {
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+
+.link {
+  stroke: #999;
+  stroke-opacity: .6;
+}
+
+text {
+  font: 10px sans-serif;
+  pointer-events: none;
+}
+
+</style>
 </head>
 <body >
-  <div>
-    <form class="form-horizontal well">
-      <legend>
-        <h3>
-          <div id="title">HTML5 File API</div>
-        </h3>
-      </legend>
-      <fieldset>
-          <label for="csvFileInput"> <strong>CSV File:</strong>
-          </label>
-          <input type="file" id="csvFileInput" onchange="handleFiles(this.files)"
-          accept=".csv">
+  <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#"><img src="Serpent.png" height="40px">  Serpent</a>
         </div>
-      </fieldset>
-    </form>
-    <div id="output">
-    </div>
-  </div>
-  <br>
-  <br>
-  <footer>
-    <center>
-      <p>&copy; Mounir Messelmeni 2012</p>
-    </center>
-  </footer>
+</nav>
+<div style="text-align:right">
+    <span class="btn pull-right btn-file">
+      Upload file<input type="file" id="csvFileInput" onchange="handleFiles(this.files)" accept=".csv" float:"right">
+    </span>
+</div>   
+<br>
+    <ul class="nav nav-tabs">
+        <li class="nav active"><a href="#phonebook" data-toggle="tab">Phonebook</a></li>
+  <li class="nav"><a href="#network" data-toggle="tab">Network</a></li>
+        <li class="nav"><a href="#map" data-toggle="tab">Map</a></li> 
+   </ul>
 
-  <!-- Le javascript
-    ================================================== -->
-  <!-- Placed at the end of the document so the pages load faster -->
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div class="tab-pane fade in active" id="phonebook"></div>
+          <div class="tab-pane fade" id="network"></div>
+          <div class="tab-pane fade" id="map"></div>
+    </div>
+
+<div id="container"></div><br><br><br><br>
+   
+
+  <br>
+  <br>
   <script type="text/javascript" src="js/read-csv.js"></script>
 </body>
 </html>
