@@ -73,7 +73,12 @@ function drawOutput(lines){
 
            tbl_body+='<table id="phone" class="display"><thead><tr><th>Source</th><th>Number</th><th>Contact</th><th>Location</th></thead><tbody>'+tbl_row+"</tbody></table>"
            $("#phonebook").html(tbl_body)
-           $("#phone").dataTable();
+           $("#phone").dataTable({
+        	"dom": 'T<"clear">lfrtip',
+        	"tableTools": {
+            		"sSwfPath": "../DataTables-1.10.2/extensions/TableTools/swf/copy_csv_xls_pdf.swf"
+        	}
+           });
 
        	   
 function onlyUnique(value, index, self) { 
@@ -92,7 +97,7 @@ function onlyUnique(value, index, self) {
       			var color = d3.scale.category20().domain(country.filter(onlyUnique))
                         console.log(color('Benin'))
 
-			var svg = d3.select("#network").append("svg")
+			var svg = d3.select("#network_container").append("svg")
 			    .attr("width", width)
 			    .attr("height", height);
 

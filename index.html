@@ -11,7 +11,7 @@
         <script src="bootstrap/js/bootstrap.min.js"></script> 
         <script type="text/javascript" src="https://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
 
-        
+        <link rel="stylesheet" href="/css/font-awesome.min.css">
         <script type="text/javascript" charset="utf8" src="../DataTables-1.10.2/media/js/jquery.dataTables.js"></script>
         <link rel="stylesheet" type="text/css" href="../DataTables-1.10.2/media/css/jquery.dataTables.css">
         <script type="text/javascript" src="../DataTables-1.10.2/extensions/TableTools/js/dataTables.tableTools.js"></script>
@@ -59,18 +59,26 @@ text {
   pointer-events: none;
 }
 
+ i.icon {
+      display:inline-block; /* chrome-fix */
+  }
+
 </style>
 </head>
 <body >
   <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#"><img src="Serpent.png" height="40px">  Serpent</a>
+            <a class="navbar-brand" href="#"><img src="Serpent.png" height="40px">Serpent
+</a>
         </div>
 </nav>
 <div style="text-align:right">
     <span class="btn pull-right btn-file">
-      Upload file<input type="file" id="csvFileInput" onchange="handleFiles(this.files)" accept=".csv" float:"right">
+      <input type="file" id="csvFileInput" onchange="handleFiles(this.files)" accept=".csv,.txt,.tsv" float:"right">
     </span>
+ 
+<button type="button"
+class="btn" data-toggle="popover" data-content="The upload format is tab delimited txt file  where each line contains:source,number,contact name"><i class="fa fa-question-circle"></i></button>
 </div>   
 <br>
     <ul class="nav nav-tabs">
@@ -82,15 +90,20 @@ text {
     <!-- Tab panes -->
     <div class="tab-content">
         <div class="tab-pane fade in active" id="phonebook"></div>
-          <div class="tab-pane fade" id="network"></div>
+          <div class="tab-pane fade" id="network"><button class="btn btn-success" id="save_as_pdf">Save as PDF</button><div id="network_container"></div></div>
           <div class="tab-pane fade" id="map"></div>
     </div>
 
 <div id="container"></div><br><br><br><br>
    
-
-  <br>
-  <br>
   <script type="text/javascript" src="js/read-csv.js"></script>
+<script>
+   $('[data-toggle="popover"]').popover({
+        trigger: 'hover',
+        'placement': 'bottom',
+        'show': true
+    });
+</script>
+
 </body>
 </html>
