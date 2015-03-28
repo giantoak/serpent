@@ -94,15 +94,45 @@ class="btn" data-toggle="popover" data-content="The upload format is tab delimit
           <div class="tab-pane fade" id="map"></div>
     </div>
 
+<form id="svgform" method="post" action="download.pl">
+<input type="hidden" id="output_format" name="output_format" value="">
+<input type="hidden" id="data" name="data" value="">
+</form>
 <div id="container"></div><br><br><br><br>
    
   <script type="text/javascript" src="js/read-csv.js"></script>
 <script>
+
+$(document).ready(function(){
+
+$("#save_as_pdf").click(function(){
+
+
+console.log("downloading!")
+});
+
    $('[data-toggle="popover"]').popover({
         trigger: 'hover',
         'placement': 'bottom',
         'show': true
     });
+
+});
+
+function submit_download_form(output_format)
+{
+	// Get the d3js SVG element
+	var tmp = document.getElementById("network_container");
+	var svg = tmp.getElementsByTagName("svg")[0];
+	// Extract the data as SVG text string
+	var svg_xml = (new XMLSerializer).serializeToString(svg);
+	// Submit the <FORM> to the server.
+	// The result will be an attachment file to download.
+	var form = document.getElementById("svgform");
+	form['output_format'].value = output_format;
+	form['data'].value = svg_xml ;
+	
+}
 </script>
 
 </body>
