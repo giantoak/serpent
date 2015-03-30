@@ -1,163 +1,147 @@
 <html>
+
 <head>
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <title>Serpent</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Serpent</title>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type=text/css>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css" type=text/css>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <script type="text/javascript" charset="utf8" src="../DataTables-1.10.2/media/js/jquery.dataTables.js"></script>
+    <link rel="stylesheet" type="text/css" href="../DataTables-1.10.2/media/css/jquery.dataTables.css">
+    <script type="text/javascript" src="../DataTables-1.10.2/extensions/TableTools/js/dataTables.tableTools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../DataTables-1.10.2/extensions/TableTools/css/dataTables.tableTools.css">
+    <link rel="stylesheet" type="text/css" href="css/jquery.svg.css">
+    <script type="text/javascript" src="js/jquery.svg.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+    <style>
+        .btn pull-right {
+            position: relative;
+            overflow: hidden;
+        }
         
+        .pull-right btn-file input[type=file] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            min-width: 100%;
+            min-height: 100%;
+            font-size: 100px;
+            text-align: right;
+            filter: alpha(opacity=0);
+            opacity: 0;
+            outline: none;
+            background: white;
+            cursor: inherit;
+            display: block;
+        }
         
-        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type=text/css>
-        <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css" type=text/css>
-        <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-        <script src="bootstrap/js/bootstrap.min.js"></script> 
-        <script type="text/javascript" src="https://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
-
-        <link rel="stylesheet" href="/css/font-awesome.min.css">
-        <script type="text/javascript" charset="utf8" src="../DataTables-1.10.2/media/js/jquery.dataTables.js"></script>
-        <link rel="stylesheet" type="text/css" href="../DataTables-1.10.2/media/css/jquery.dataTables.css">
-        <script type="text/javascript" src="../DataTables-1.10.2/extensions/TableTools/js/dataTables.tableTools.js"></script>
-        <link rel="stylesheet" type="text/css" href="../DataTables-1.10.2/extensions/TableTools/css/dataTables.tableTools.css">   
-	<link rel="stylesheet" type="text/css" href="css/jquery.svg.css"> 
-	<script type="text/javascript" src="js/jquery.svg.js"></script> 
-<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
-
-<style>
-.btn pull-right {
-   position:relative;
-   overflow:hidden;
-}
-
-
-.pull-right btn-file input[type=file]{
-   position:absolute;
-   top:0;
-   right:0;
-   min-width:100%;
-   min-height:100%;
-   font-size:100px;
-   text-align:right;
-   filter: alpha(opacity=0);
-   opacity: 0;
-   outline:none;
-   background:white;
-   cursor: inherit;
-   display:block;
-
-}
-
-.node {
-  stroke: #fff;
-  stroke-width: 1.5px;
-}
-
-.link {
-  stroke: #999;
-  stroke-opacity: .6;
-}
-
-text {
-  font: 10px sans-serif;
-  pointer-events: none;
-}
-
- i.icon {
-      display:inline-block; /* chrome-fix */
-  }
-
-</style>
+        .node {
+            stroke: #fff;
+            stroke-width: 1.5px;
+        }
+        
+        .link {
+            stroke: #999;
+            stroke-opacity: .6;
+        }
+        
+        text {
+            font: 10px sans-serif;
+            pointer-events: none;
+        }
+        
+        i.icon {
+            display: inline-block;
+            /* chrome-fix */
+        }
+    </style>
 </head>
-<body >
-  <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+
+<body>
+    <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
         <div class="navbar-header">
             <a class="navbar-brand" href="#"><img src="Serpent.png" height="40px">Serpent
-</a>
+            </a>
         </div>
-</nav>
-<div style="text-align:right">
-    <span class="btn pull-right btn-file">
-      <input type="file" id="csvFileInput" onchange="handleFiles(this.files)" accept=".csv,.txt,.tsv" float:"right">
-    </span>
- 
-<button type="button"
-class="btn" data-toggle="popover" data-content="The upload format is tab delimited txt file  where each line contains:source,number,contact name"><i class="fa fa-question-circle"></i></button>
-</div>   
-<br>
+    </nav>
+    <div style="text-align:right">
+        <span class="btn pull-right btn-file">
+<input type="file" id="csvFileInput" onchange="handleFiles(this.files)" accept=".csv,.txt,.tsv" float:"right">
+</span>
+        <button type="button" class="btn" data-toggle="popover" data-content="The upload format is tab delimited txt file where each line contains:source,number,contact name"><i class="fa fa-question-circle"></i></button>
+    </div>
+    <br>
     <ul class="nav nav-tabs">
         <li class="nav active"><a href="#phonebook" data-toggle="tab">Phonebook</a></li>
-  <li class="nav"><a href="#network" data-toggle="tab">Network</a></li>
-        <li class="nav"><a href="#map" data-toggle="tab">Map</a></li> 
-   </ul>
-
+        <li class="nav"><a href="#network" data-toggle="tab">Network</a></li>
+        <li class="nav"><a href="#map" data-toggle="tab">Map</a></li>
+    </ul>
     <!-- Tab panes -->
     <div class="tab-content">
         <div class="tab-pane fade in active" id="phonebook"></div>
-          <div class="tab-pane fade" id="network"><button class="btn btn-success" id="save_as_pdf">Save as PDF</button><div id="network_container"></div></div>
-          <div class="tab-pane fade" id="map"></div>
+        <div class="tab-pane fade" id="network">
+            <button class="btn btn-success" id="save_as_pdf">Save as PDF</button>
+            <div id="network_container"></div>
+        </div>
+        <div class="tab-pane fade" id="map"></div>
     </div>
+    <form id="svgform" method="post" action="svg2pdf/download">
+        <input type="hidden" id="output_format" name="output_format" value="">
+        <input type="hidden" id="data" name="data" value="">
+    </form>
+    <div id="container"></div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <script type="text/javascript" src="js/read-csv.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#save_as_pdf").click(function() {
+                //console.log(show_svg_code())
+                submit_download_form("pdf");
+                console.log("downloading!")
+            });
+            $('[data-toggle="popover"]').popover({
+                trigger: 'hover',
+                'placement': 'bottom',
+                'show': true
+            });
+        });
 
-<form id="svgform" method="post" action="svg2pdf/download">
-<input type="hidden" id="output_format" name="output_format" value="">
-<input type="hidden" id="data" name="data" value="">
-</form>
-<div id="container"></div><br><br><br><br>
-   
-  <script type="text/javascript" src="js/read-csv.js"></script>
-<script>
+        function submit_download_form(output_format) {
+            // Get the d3 SVG element
+            var svg = document.getElementById("network_container").getElementsByTagName("svg")[0];
+            // Extract SVG text string
+            var svg_xml = (new XMLSerializer).serializeToString(svg);
+            // Make a form with the SVG data
+            var form = document.getElementById("svgform");
+            form['output_format'].value = output_format;
+            form['data'].value = svg_xml;
+            form.submit();
+        }
 
-$(document).ready(function(){
-
-$("#save_as_pdf").click(function(){
-
-//console.log(show_svg_code())
-submit_download_form("pdf");
-console.log("downloading!")
-});
-
-   $('[data-toggle="popover"]').popover({
-        trigger: 'hover',
-        'placement': 'bottom',
-        'show': true
-    });
-
-});
-
-	
-				function submit_download_form(output_format){
-					// Get the d3 SVG element
-					var svg = document.getElementById("network_container").getElementsByTagName("svg")[0];
-
-					// Extract SVG text string
-					var svg_xml = (new XMLSerializer).serializeToString(svg);
-
-					// Make a form with the SVG data
-					var form = document.getElementById("svgform");
-					form['output_format'].value=output_format;
-					form['data'].value = svg_xml;
-					form.submit();                                  
-					
-                                }   
-
-                                function show_svg_code()
-                                {
-                                    // Get the d3js SVG element
-                                    //var tmp  = document.getElementById("#container.map");
-                                    //var tmp = $("#container .svg");
-                                    //var svg = tmp.getElementsByTagName("svg")[0];
-                                    var svg = $("#network_container")[0]
-                                    // Extract the data as SVG text string
-                                    var svg_xml = (new XMLSerializer).serializeToString(svg);
-
-                                    //Optional: prettify the XML with proper indentations
-                                    //svg_xml = vkbeautify.xml(svg_xml);
-
-                                    // Set the content of the <pre> element with the XML
-                                    $("#svg_code").text(svg_xml);
-                                    console.log($("#svg_code"))
-                                    //Optional: Use Google-Code-Prettifier to add colors.
-                                    //prettyPrint();
-                                }
-
-
-</script>
-
+        function show_svg_code() {
+            // Get the d3js SVG element
+            //var tmp = document.getElementById("#container.map");
+            //var tmp = $("#container .svg");
+            //var svg = tmp.getElementsByTagName("svg")[0];
+            var svg = $("#network_container")[0]
+                // Extract the data as SVG text string
+            var svg_xml = (new XMLSerializer).serializeToString(svg);
+            //Optional: prettify the XML with proper indentations
+            //svg_xml = vkbeautify.xml(svg_xml);
+            // Set the content of the <pre> element with the XML
+            $("#svg_code").text(svg_xml);
+            console.log($("#svg_code"))
+                //Optional: Use Google-Code-Prettifier to add colors.
+                //prettyPrint();
+        }
+    </script>
 </body>
+
 </html>
