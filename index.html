@@ -16,9 +16,9 @@
         <link rel="stylesheet" type="text/css" href="../DataTables-1.10.2/media/css/jquery.dataTables.css">
         <script type="text/javascript" src="../DataTables-1.10.2/extensions/TableTools/js/dataTables.tableTools.js"></script>
         <link rel="stylesheet" type="text/css" href="../DataTables-1.10.2/extensions/TableTools/css/dataTables.tableTools.css">   
- 
- 
-
+	<link rel="stylesheet" type="text/css" href="css/jquery.svg.css"> 
+	<script type="text/javascript" src="js/jquery.svg.js"></script> 
+<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
 
 <style>
 .btn pull-right {
@@ -94,7 +94,7 @@ class="btn" data-toggle="popover" data-content="The upload format is tab delimit
           <div class="tab-pane fade" id="map"></div>
     </div>
 
-<form id="svgform" method="post" action="download.pl">
+<form id="svgform" method="post" action="svg2pdf/download">
 <input type="hidden" id="output_format" name="output_format" value="">
 <input type="hidden" id="data" name="data" value="">
 </form>
@@ -107,7 +107,8 @@ $(document).ready(function(){
 
 $("#save_as_pdf").click(function(){
 
-
+//console.log(show_svg_code())
+submit_download_form("pdf");
 console.log("downloading!")
 });
 
@@ -119,20 +120,43 @@ console.log("downloading!")
 
 });
 
-function submit_download_form(output_format)
-{
-	// Get the d3js SVG element
-	var tmp = document.getElementById("network_container");
-	var svg = tmp.getElementsByTagName("svg")[0];
-	// Extract the data as SVG text string
-	var svg_xml = (new XMLSerializer).serializeToString(svg);
-	// Submit the <FORM> to the server.
-	// The result will be an attachment file to download.
-	var form = document.getElementById("svgform");
-	form['output_format'].value = output_format;
-	form['data'].value = svg_xml ;
 	
-}
+				function submit_download_form(output_format){
+					// Get the d3 SVG element
+					var svg = document.getElementById("network_container").getElementsByTagName("svg")[0];
+
+					// Extract SVG text string
+					var svg_xml = (new XMLSerializer).serializeToString(svg);
+
+					// Make a form with the SVG data
+					var form = document.getElementById("svgform");
+					form['output_format'].value=output_format;
+					form['data'].value = svg_xml;
+					form.submit();                                  
+					
+                                }   
+
+                                function show_svg_code()
+                                {
+                                    // Get the d3js SVG element
+                                    //var tmp  = document.getElementById("#container.map");
+                                    //var tmp = $("#container .svg");
+                                    //var svg = tmp.getElementsByTagName("svg")[0];
+                                    var svg = $("#network_container")[0]
+                                    // Extract the data as SVG text string
+                                    var svg_xml = (new XMLSerializer).serializeToString(svg);
+
+                                    //Optional: prettify the XML with proper indentations
+                                    //svg_xml = vkbeautify.xml(svg_xml);
+
+                                    // Set the content of the <pre> element with the XML
+                                    $("#svg_code").text(svg_xml);
+                                    console.log($("#svg_code"))
+                                    //Optional: Use Google-Code-Prettifier to add colors.
+                                    //prettyPrint();
+                                }
+
+
 </script>
 
 </body>
