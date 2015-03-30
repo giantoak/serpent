@@ -99,7 +99,8 @@ function onlyUnique(value, index, self) {
 
 			var svg = d3.select("#network_container").append("svg")
 			    .attr("width", width)
-			    .attr("height", height);
+			    .attr("height", height)
+			    .attr("id","network_graph");
 
 			 var force = d3.layout.force()
 			    .nodes(graph.nodes)
@@ -109,10 +110,13 @@ function onlyUnique(value, index, self) {
 			    .charge(-150)
 			    .start();
 
-			  var link = svg.append("g").selectAll(".link")
+
+			  var link = svg.selectAll("g.link")
 			      .data(graph.links)
 			    .enter().append("line")
-			      .attr("class", "link");
+			      .attr("class", "link")
+			      .attr("stroke","#999")
+			      .attr("stroke-width","1px");
 
 			// Create the groups under svg
 			var gnodes = svg.selectAll('g.gnode')
